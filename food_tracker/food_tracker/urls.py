@@ -20,10 +20,11 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     url(r'^',include(('food.urls','food'),namespace="food")),
+	path('admin/', admin.site.urls),
 	
     url(r'^accounts/login/$', auth_views.LoginView.as_view(template_name= 'login.html'), name='auth_login'),
-    url(r'^accounts/logout/$', auth_views.LogoutView.as_view(next_page= 'food:login'), name='auth_logout'),
-    url(r'^accounts/password/change$', auth_views.PasswordChangeView.as_view(template_name = 'password_change.html', success_url='/'), name='auth_password_change'),
+    url(r'^accounts/logout/$', auth_views.LogoutView.as_view(next_page='food:login'), name='auth_logout'),
+	url(r'^accounts/password/change$', auth_views.PasswordChangeView.as_view (template_name='password_change.html',success_url=reverse_lazy('food:login')),name='auth_password_change'),
 ]
